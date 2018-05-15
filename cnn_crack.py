@@ -8,11 +8,12 @@ import re
 from keras.models import Sequential
 from keras.layers import Conv2D, Dense, MaxPool2D, Flatten, Dropout
 
-#################### create dataset ######################
-path = '--path/to/data'
-
+#################### set parameters ######################
 wx = 13
 wy = 2
+
+#################### create dataset ######################
+path = '--path/to/data'
 
 def create_data(path,wx,wy):
     Xtrn = []
