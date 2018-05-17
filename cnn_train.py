@@ -13,7 +13,7 @@ wx = 13
 wy = 2
 
 #################### create dataset ######################
-path = '--path/to/data'
+path = '../path/to/data'
 
 def create_data(path,wx,wy):
     Xtrn = []
@@ -109,13 +109,13 @@ def cnn_model():
 model = cnn_model()
 model.fit(Xtrn,ytrn,batch_size=128,epochs=10,verbose=2)
 
-file = os.path.expanduser('~') + '--path/to/directory/model.json'
+file = os.path.expanduser('~') + '../path/to/directory/model.json'
 try:
     os.remove(file)
 except OSError:
     pass
 
-file = os.path.expanduser('~') + '--path/to/directory/weights.h5'
+file = os.path.expanduser('~') + '../path/to/directory/weights.h5'
 try:
     os.remove(file)
 except OSError:
