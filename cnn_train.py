@@ -43,7 +43,8 @@ def create_data(path,wx,wy):
             # padding to borders of image
             pimg = cv2.copyMakeBorder(img,wx,wx,wx,wx,cv2.BORDER_REFLECT101)
             pgt  = cv2.copyMakeBorder(gt,wy,wy,wy,wy,cv2.BORDER_REFLECT101)
-
+            
+            # collect positive samples 
             cnt = 0
             for i in range(wx,w+wx):
                 for j in range(wx,h+wx):
@@ -55,7 +56,8 @@ def create_data(path,wx,wy):
                         Xp.append(patch)
                         yp.append(label)
                         cnt += 1
-
+            
+            # collect random negative samples 
             all_idx = list(itertools.product(range(wx,w+wx), range(wx,h+wx)))
             np.random.shuffle(all_idx)
             neg_idx = all_idx[:2*cnt]
