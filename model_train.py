@@ -65,6 +65,8 @@ def create_data(path,wx,wy,mode):
 
                         Xp.append(hg)
                         yp.append(label)
+                    
+                    cnt += 1
 
         # collect random negative samples 
         for i in np.random.choice(range(wx,w+wx),int(np.sqrt(2*cnt))):
@@ -138,7 +140,7 @@ early_stop = EarlyStopping(monitor='val_loss', patience=5, verbose=0, mode='auto
 mdl_save = ModelCheckpoint('mdl_wts.hdf5', save_best_only=True, monitor='val_loss', mode='auto')
 
 
-model = train_model()
+model = train_model(mode)
 model.fit(Xtrn,ytrn,batch_size=128,epochs=10,shuffle=True,verbose=2,
           validation_data=(Xtst,ytst),callbacks=[early_stop,mdl_save])
 
