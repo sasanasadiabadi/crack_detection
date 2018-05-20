@@ -99,7 +99,7 @@ X, y = create_data(path,wx,wy,mode)
 print(np.shape(X))
 print(np.shape(y))
 
-################### train CNN model ########################
+################### train model ########################
 def train_model(mode):
     model = Sequential()
     
