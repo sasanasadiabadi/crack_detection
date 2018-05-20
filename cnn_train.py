@@ -1,8 +1,6 @@
 import numpy as np
-import itertools
 import cv2
 import os
-import h5py
 import re
 
 from keras.models import Sequential
@@ -58,18 +56,15 @@ def create_data(path,wx,wy):
                         cnt += 1
             
             # collect random negative samples 
-            all_idx = list(itertools.product(range(wx,w+wx), range(wx,h+wx)))
-            np.random.shuffle(all_idx)
-            neg_idx = all_idx[:2*cnt]
+            for i in np.random.choice(range(wx,w+wx),int(np.sqrt(2*cnt))):
+                for j in np.random.choice(range(wx,h+wx),int(np.sqrt(2*cnt))):
+                    if (pgt[j-wx+wy,i-wx+wy,0]==255):  # negative sample (white pixel)
+                        patch = pimg[j-wx:j+wx+1,i-wx:i+wx+1,:]
+                        label = pgt[j-wx:j-wx+2*wy+1,i-wx:i-wx+2*wy+1,0]
+                        label = np.reshape(label,((2*wy+1)**2,),order='F')
 
-            for (i,j) in neg_idx:
-                if (pgt[j-wx+wy,i-wx+wy,0]==255):  # negative sample (white pixel)
-                    patch = pimg[j-wx:j+wx+1,i-wx:i+wx+1,:]
-                    label = pgt[j-wx:j-wx+2*wy+1,i-wx:i-wx+2*wy+1,0]
-                    label = np.reshape(label,((2*wy+1)**2,),order='F')
-
-                    Xn.append(patch)
-                    yn.append(label)
+                        Xn.append(patch)
+                        yn.append(label)
 
         X = np.vstack((Xp,Xn))
         y = np.vstack((yp,yn))
