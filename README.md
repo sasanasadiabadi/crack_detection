@@ -1,2 +1,4 @@
 # crack_detection
-a CNN based pavement crack detection 
+a ML based pavement crack detection 
+
+
