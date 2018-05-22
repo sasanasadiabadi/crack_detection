@@ -15,7 +15,7 @@ a ML based pavement crack detection
      - Input : HOG features from   SxS patch around a sample
      
      - Output: class label of the sample (crack: c=0, non-crack: c=1)
-     - 
+     
 
 - data collection ![](Results/img.png)
 
@@ -34,8 +34,12 @@ a ML based pavement crack detection
      - summation and normalization ==> probability map
      - if pmap > 0.5 ==> pixel is crack
      - if pmap < 0.5 ==> pixel is non-crack
-     - 
-- Results: CNN ![](Results/outfile1.jpg)
+     
+- Results: 
+
+- CNN (S=5) ![](Results/outfile1.jpg)
  
-- Results: HOG ![](Results/outfile2.jpg)
+- HOG (S=1) ![](Results/outfile2.jpg)
+
+- HOG (S=5) ![](Results/outfile3.jpg)
 
