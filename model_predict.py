@@ -7,18 +7,30 @@ from keras.models import model_from_json
 ############### set parameters #################
 wx = 13
 wy = 2
+mode = 1 # 1 for CNN/ 0 for HOG
 
 ############### load model ######################
-json_file = open('model.json', 'r')
+
+if mode:
+    json_file = open('model_cnn.json', 'r')
+else:
+    json_file = open('model_hog.json', 'r')
+
 model_json = json_file.read()
 json_file.close()
 model = model_from_json(model_json)
+
 # load weights into new model
-model.load_weights("weights.h5")
+if mode:
+    model.load_weights("mdl_wts_cnn.hdf5")
+else:
+    model.load_weights("mdl_wts_hog.hdf5")
+
 model.compile(loss='binary_crossentropy', optimizer='adam')
 print("Loaded model from disk")
 
 ############### test on unseen data ######################
+
 filename = 'testimg.jpg'
 tst_img = cv2.imread(filename)
 tst_img = tst_img.astype(np.float32)/255
