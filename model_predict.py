@@ -3,6 +3,7 @@ import cv2
 import scipy.misc
 
 from keras.models import model_from_json
+from skimage import feature
 
 ############### set parameters #################
 wx = 13
@@ -43,10 +44,17 @@ img_out = cv2.copyMakeBorder(img_out,wy,wy,wy,wy,cv2.BORDER_REFLECT101)
 
 for i in range(wx,w+wx):
     for j in range(wx,h+wx):
-        Xtst = pimg[j-wx:j+wx+1,i-wx:i+wx+1,:]
-        Xtst = Xtst[np.newaxis,:,:,:]
-        preds = model.predict(Xtst)
+        patch = pimg[j-wx:j+wx+1,i-wx:i+wx+1,:]
         
+        if mode:
+            Xtst = Xtst[np.newaxis,:,:,:]
+        else:
+            Xtst = feature.hog(patch[:,:,0], orientations=9, pixels_per_cell=(8, 8),
+                               cells_per_block=(2, 2), transform_sqrt=True, block_norm="L1")
+
+            Xtst = Xtst[np.newaxis,:]
+            
+        preds = model.predict(Xtst)
         label = np.reshape(preds,(2*wy+1,2*wy+1),order='F')
         
         img_out[j-wx:j-wx+2*wy+1,i-wx:i-wx+2*wy+1] = img_out[j-wx:j-wx+2*wy+1,i-wx:i-wx+2*wy+1] + label
